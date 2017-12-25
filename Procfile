@@ -1,1 +1,1 @@
-worker: node tweetBot.js
+worker: node twitterBot.js
