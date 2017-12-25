@@ -1,0 +1,24 @@
+{
+  "name": "alternate-side-bot",
+  "version": "1.0.0",
+  "description": "A bot to retweet when alternate side parking rules are suspended in NYC",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achasveachas/alternate-side-bot.git"
+  },
+  "keywords": [
+    "twitter",
+    "bot",
+    "alternate-side-parking"
+  ],
+  "author": "Yechiel Kalmenson <contact@yechiel.me> (http://yechiel.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/achasveachas/alternate-side-bot/issues"
+  },
+  "homepage": "https://github.com/achasveachas/alternate-side-bot#readme"
+}
