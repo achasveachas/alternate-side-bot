@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/achasveachas/alternate-side-bot/issues"
   },
-  "homepage": "https://github.com/achasveachas/alternate-side-bot#readme"
+  "homepage": "https://github.com/achasveachas/alternate-side-bot#readme",
+  "dependencies": {
+    "twit": "^2.2.9"
+  }
 }
