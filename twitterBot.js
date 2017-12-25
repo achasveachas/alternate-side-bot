@@ -12,7 +12,7 @@ const Twitter = new twit(config);
 
 let since_id = 1
 
-let retweet = function() {
+const getTweets = function() {
     let params = {
         screen_name: "NYCASP",
         since_id: since_id
@@ -22,15 +22,9 @@ let retweet = function() {
         if(!err) {
             for (let i = 0; i < data.length; i++) {
                 let tweet = data[i];
-                since_id = tweet.id_str
+                since_id = tweet.id + 1
                 if(tweet.text.includes("suspended")) {
-                    Twitter.post('statuses/retweet/:id', {id: tweet.id_str}, function(err, res) {
-                        if(err)
-                            console.log(err)
-                        
-                        if(res)
-                            console.log("Successfully Retweeted")
-                    })
+                    retweet(tweet.id_str)
                 }
             }
         } else {
@@ -39,4 +33,18 @@ let retweet = function() {
     })
 }
 
-retweet()
+const retweet = function(id) {
+    Twitter.post('statuses/retweet/:id', {id: id}, function(err, res) {
+        if(err)
+            console.log(err)
+        
+        if(res)
+            console.log("Successfully Retweeted")
+        })
+        
+}
+
+
+getTweets()
+
+setInterval(getTweets, 1800000)
