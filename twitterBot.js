@@ -31,3 +31,7 @@ const retweet = function(id) {
         })
         
 }
+
+// Prevent Heroku from falling asleep
+
+setInterval(() => console.log('Listening...'), 1740000)
