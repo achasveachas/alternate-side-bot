@@ -10,41 +10,24 @@ const config = {
 
 const Twitter = new twit(config);
 
-let since_id = 1
+const userID = "102773464"
 
-const getTweets = function() {
-    let params = {
-        screen_name: "NYCASP",
-        since_id: since_id
-    }
+const stream = Twitter.stream('statuses/filter', {follow: [userID]})
 
-    Twitter.get('/statuses/user_timeline', params, function(err, data) {
-        if(!err) {
-            for (let i = 0; i < data.length; i++) {
-                let tweet = data[i];
-                since_id = tweet.id + 1
-                if(tweet.text.includes("suspended")) {
-                    retweet(tweet.id_str)
-                }
-            }
-        } else {
-            console.log("could not retrieve tweets becuase ", err)
+
+stream.on('tweet', function (tweet) {
+        if(tweet.text.includes("suspended")) {
+            retweet(tweet.id_str)
         }
-    })
-}
+  });
 
 const retweet = function(id) {
     Twitter.post('statuses/retweet/:id', {id: id}, function(err, res) {
-        if(err)
-            console.log(err)
-        
-        if(res)
-            console.log("Successfully Retweeted")
+            if(res){
+                console.log("Successfully Retweeted")
+            } else {
+                console.log(error.message)
+            }
         })
         
 }
-
-
-getTweets()
-
-setInterval(getTweets, 1800000)
