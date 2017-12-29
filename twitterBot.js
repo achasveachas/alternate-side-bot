@@ -18,6 +18,8 @@ const stream = Twitter.stream('statuses/filter', {follow: [userID]})
 stream.on('tweet', function (tweet) {
         if(tweet.text.includes("suspended")) {
             retweet(tweet.id_str)
+        } else {
+            console.log("Nothing to tweet here...")
         }
   });
 
