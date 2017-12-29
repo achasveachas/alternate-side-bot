@@ -26,7 +26,7 @@ stream.on('tweet', function (tweet) {
 const retweet = function(id) {
     Twitter.post('statuses/retweet/:id', {id: id}, function(err, res) {
             if(res){
-                console.log("Successfully Retweeted")
+                console.log(`Successfully Retweeted "${res.text}"`)
             } else {
                 console.log(error.message)
             }
