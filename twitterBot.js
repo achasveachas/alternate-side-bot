@@ -23,7 +23,7 @@ stream.on('tweet', function (tweet) {
     if(tweet.user.id_str === userID){
 
         let tweetId = tweet.id_str
-        let tweetBody = tweet.text
+        let tweetBody = tweet.text.replace("RT @NYCASP: ", "")
         let suspended = tweetBody.includes("suspended")
 
         sendStatus(tweetBody, suspended)
