@@ -19,14 +19,20 @@ const stream = Twitter.stream('statuses/filter', {follow: [userID]})
 
 
 stream.on('tweet', function (tweet) {
-        if(tweet.user.id_str === userID && tweet.text.includes("suspended")) {
-            retweet(tweet.id_str)
-            sendStatus(tweet.text, true)
-        } else {
-            sendStatus(tweet.text, false)
-            console.log("Nothing to tweet here...")
+
+    if(tweet.user.id_str === userID){
+
+        let tweetId = tweet.id_str
+        let tweetBody = tweet.text
+        let suspended = tweetBody.includes("suspended")
+
+        sendStatus(tweetBody, suspended)
+
+        if(suspended) {
+            retweet(tweetId)
         }
-  });
+    }
+});
 
 const retweet = function(id) {
     Twitter.post('statuses/retweet/:id', {id: id}, function(err, res) {
