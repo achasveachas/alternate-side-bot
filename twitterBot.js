@@ -1,4 +1,5 @@
 require('dotenv').config()
+const request = require('request');
 const twit = require('twit');
 
 const config = {
@@ -7,6 +8,8 @@ const config = {
  access_token: process.env.access_token,
  access_token_secret: process.env.access_token_secret
 }
+
+const  personal_token = process.env.personal_token
 
 const Twitter = new twit(config);
 
@@ -18,7 +21,9 @@ const stream = Twitter.stream('statuses/filter', {follow: [userID]})
 stream.on('tweet', function (tweet) {
         if(tweet.user.id_str === userID && tweet.text.includes("suspended")) {
             retweet(tweet.id_str)
+            sendStatus(tweet.text, true)
         } else {
+            sendStatus(tweet.text, false)
             console.log("Nothing to tweet here...")
         }
   });
@@ -33,6 +38,21 @@ const retweet = function(id) {
         })
         
 }
+
+const sendStatus = function(body, suspended) {
+    request.post(
+        "https://alternate-side-twilio.herokuapp.com/status", 
+        {
+            'auth': {'bearer': personal_token},
+            'json': {'status': {'body': body, 'suspended': suspended}}
+        }, function(error, response, body) {
+            console.log("Error "+error)
+            console.log("Response "+response.statusCode)
+            console.log("Body "+body)
+        }
+    )
+}
+
 
 // Prevent Heroku from falling asleep
 
