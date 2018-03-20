@@ -13,17 +13,16 @@ const  personal_token = process.env.personal_token
 
 const Twitter = new twit(config);
 
-const userID = "102773464"
+const userID = "102773464" // @NYCASP      
 
 const stream = Twitter.stream('statuses/filter', {follow: [userID]})
-
 
 stream.on('tweet', function (tweet) {
 
     if(tweet.user.id_str === userID){
-
         let tweetId = tweet.id_str
-        let tweetBody = tweet.text.replace("RT @NYCASP: ", "")
+        let tweetBody = tweet.truncated ? tweet.extended_tweet.full_text : tweet.text
+        tweetBody = tweetBody.replace("RT @NYCASP: ", "")
         let suspended = tweetBody.includes("suspended")
 
         sendStatus(tweetBody, suspended)
